@@ -35,7 +35,10 @@ func handler(event events.APIGatewayProxyRequest) (events.APIGatewayProxyRespons
 
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
-		Body:       string(response),
+		Headers: map[string]string{
+			"Access-Control-Allow-Origin": "*",
+		},
+		Body: string(response),
 	}, nil
 }
 

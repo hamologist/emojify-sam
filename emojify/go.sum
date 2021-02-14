@@ -13,6 +13,8 @@ github.com/go-chi/chi v1.5.1/go.mod h1:REp24E+25iKvxgeTfHmdUoL5x15kBiDBlnIl5bCwe
 github.com/hamologist/emojify v0.0.0-20210123164714-1fd94c48f87d h1:clXJm9QX6mh0II9kJlcfVLF0fgHMvILbnBX++WtZ+3k=
 github.com/hamologist/emojify v0.0.0-20210123172515-e2a4525dfc01 h1:G0SkodHReLCgcX628DLlyiNYN1vkzn0r/YMam5dfuJ4=
 github.com/hamologist/emojify v0.0.0-20210123172515-e2a4525dfc01/go.mod h1:4LdyHcGxj+uBlE9n2LWmMbnDBAGQ7JE6dAhZPN+N5Cs=
+github.com/hamologist/emojify v0.0.0-20210214044544-1f38e1bf8415 h1:lwZnZMUrgLrZeplD/zehskxGeki6/KiEIXb3biqU6l0=
+github.com/hamologist/emojify v0.0.0-20210214044544-1f38e1bf8415/go.mod h1:4LdyHcGxj+uBlE9n2LWmMbnDBAGQ7JE6dAhZPN+N5Cs=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/russross/blackfriday/v2 v2.0.1/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
 github.com/shurcooL/sanitized_anchor_name v1.0.0/go.mod h1:1NzhyTcUVG4SuEtjjoZeVRXNmyL/1OwPU0+IJeTBvfc=
