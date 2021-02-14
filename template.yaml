@@ -9,6 +9,11 @@ Description: >
 Globals:
   Function:
     Timeout: 5
+  Api:
+    Cors:
+      AllowMethods: "'OPTIONS,POST'"
+      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      AllowOrigin: "'*'"
 
 Parameters:
   DomainName:
