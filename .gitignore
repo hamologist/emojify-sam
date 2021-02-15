@@ -23,5 +23,6 @@ dice-roll/dlv
 .aws-sam/
 
 .idea
+emojify/dlv
 
 samconfig.toml

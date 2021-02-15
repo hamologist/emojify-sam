@@ -25,13 +25,16 @@ Parameters:
   CertificateArn:
     Type: String
     Default: arn:aws:acm:us-east-1:...:certificate/...
+  DiscordPublicKey:
+    Type: String
+    Default: <PUBLIC-KEY-IN-DISCORD-DASHBOARD>
 
 Resources:
   EmojifyFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: emojify/
-      Handler: emojify
+      CodeUri: emojify/cmd/emojify
+      Handler: main
       Runtime: go1.x
       Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
       Events:
@@ -43,6 +46,23 @@ Resources:
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           PARAM1: VALUE
+
+  EmojifyDiscordFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: emojify/cmd/discord
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+      Events:
+        HttpPost:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /discord
+            Method: post
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          DISCORD_PUBLIC_KEY: !Ref DiscordPublicKey
 
   APIDomainName:
     Type: AWS::ApiGateway::DomainName
@@ -81,3 +101,9 @@ Outputs:
   EmojifyFunctionIamRole:
     Description: "Implicit IAM Role created for Hello World function"
     Value: !GetAtt EmojifyFunctionRole.Arn
+  EmojifyDiscordFunction:
+    Description: "First Lambda Function ARN"
+    Value: !GetAtt EmojifyDiscordFunction.Arn
+  EmojifyDiscordFunctionIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt EmojifyDiscordFunctionRole.Arn
