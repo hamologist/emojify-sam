@@ -1,6 +1,6 @@
 # Emojify Sam
 **Emojify Sam** is an AWS SAM project that exposes emojification from [Emojify](https://github.com/hamologist/emojify) on AWS Lambdas.
-The project currently initiates two seperate lambdas,
+The project currently initiates two separate lambdas,
 one for emojifying via an API endpoint,
 and another that emojifies Discord messages via slash commands.
 
@@ -20,8 +20,8 @@ $ sam deploy --guided
 * **Domain Name**
     * The subdomain to use on the Hosted zone provided above.
     * Example: api.example.com
-* **Cerificate ARN**
-    * The ARN for a valid AWS certificate from the "AWS Certicate Manager".
+* **Certificate ARN**
+    * The ARN for a valid AWS certificate from the "AWS Certificate Manager".
     * Example: arn:aws:acm:us-east-1:...:certificate/...
     * **Note:** Certificate should match value provided for "Domain Name" above.
 * **Enable Discord Resources**
