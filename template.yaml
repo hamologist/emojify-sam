@@ -1,9 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  emojify-sam
-  
-  Sample SAM Template for emojify-sam
+  SAM Template for emojify-sam
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -16,18 +14,34 @@ Globals:
       AllowOrigin: "'*'"
 
 Parameters:
-  DomainName:
-    Type: String
-    Default: api.example.com
   HostedZoneName:
     Type: String
     Default: example.com.
+    Description: "The Route 53 Hosted zone domain name that record changes should be registered with"
+  DomainName:
+    Type: String
+    Default: api.example.com
+    Description: "The subdomain to register resources with on the project's Hosted zone"
   CertificateArn:
     Type: String
     Default: arn:aws:acm:us-east-1:...:certificate/...
+    Description: The ARN for a valid AWS certificate from the "AWS Certicate Manager""
+  EnableDiscordResources:
+    Type: String
+    AllowedValues:
+      - 'true'
+      - 'false'
+    Default: 'false'
+    Description: "If true Discord resources are included with deploy"
   DiscordPublicKey:
     Type: String
-    Default: <PUBLIC-KEY-IN-DISCORD-DASHBOARD>
+    Default: <CAN-BE-LEFT-AS-IS-IF-DISCORD-RESOURCES-ARE-DISABLED>
+    Description: "The Discord public key for the bot that will hit the Emojify Discord endpoint"
+
+Conditions:
+  EnableDiscordResources: !Equals
+    - !Ref EnableDiscordResources
+    - 'true'
 
 Resources:
   EmojifyFunction:
@@ -43,20 +57,18 @@ Resources:
           Properties:
             Path: /emojify
             Method: post
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
-        Variables:
-          PARAM1: VALUE
 
   EmojifyDiscordFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Condition: EnableDiscordResources
+    Type: AWS::Serverless::Function
     Properties:
       CodeUri: emojify/cmd/discord
       Handler: main
       Runtime: go1.x
-      Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+      Tracing: Active
       Events:
         HttpPost:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
             Path: /discord
             Method: post
@@ -93,17 +105,19 @@ Outputs:
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   EmojifyAPI:
-    Description: "API Gateway endpoint URL for Prod environment for First Function"
+    Description: "API Gateway endpoint URL for Prod environment for Emojify resources"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/emojify/"
   EmojifyFunction:
-    Description: "First Lambda Function ARN"
+    Description: "Emojify Lambda function ARN"
     Value: !GetAtt EmojifyFunction.Arn
   EmojifyFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
+    Description: "Implicit IAM Role created for Emojfiy function"
     Value: !GetAtt EmojifyFunctionRole.Arn
   EmojifyDiscordFunction:
-    Description: "First Lambda Function ARN"
+    Description: "Emojify Discord Lambda function ARN"
     Value: !GetAtt EmojifyDiscordFunction.Arn
+    Condition: EnableDiscordResources
   EmojifyDiscordFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
+    Description: "Implicit IAM Role created for Emojify Discord function"
     Value: !GetAtt EmojifyDiscordFunctionRole.Arn
+    Condition: EnableDiscordResources
