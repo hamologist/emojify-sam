@@ -2,8 +2,8 @@ package discord
 
 import (
 	"emojify/pkg/model/discord"
-	"github.com/hamologist/emojify/pkg/model"
-	"github.com/hamologist/emojify/pkg/transformer"
+	"github.com/hamologist/emojify-go/pkg/model"
+	"github.com/hamologist/emojify-go/pkg/transformer"
 )
 
 func InteractionToResponse(interaction *discord.Interaction) (*discord.Response, error) {

@@ -2,11 +2,11 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/hamologist/emojify/pkg/transformer"
+	"github.com/hamologist/emojify-go/pkg/transformer"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/hamologist/emojify/pkg/model"
+	"github.com/hamologist/emojify-go/pkg/model"
 )
 
 func defaultError(err error) (events.APIGatewayProxyResponse, error) {
